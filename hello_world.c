@@ -2725,10 +2725,9 @@ char * Read_FOTA_Firmware_Version(){
     int i, j;
     char * DataFile;
     DataFile = (char*)calloc(38,sizeof(char));
-    char data[]="TG102E[4G]-v1.1-001";
     char hexData[38]={0};
-    for(i=0,j=0;i<strlen(data);i++,j+=2){ 
-        sprintf((char*)hexData+j,"%02X",data[i]);
+    for(i=0,j=0;i<strlen(FIRMWARE_VERSION);i++,j+=2){ 
+        sprintf((char*)hexData+j,"%02X",FIRMWARE_VERSION[i]);
     }
     sprintf(DataFile, "%s",hexData);
     return DataFile;
@@ -2755,11 +2754,11 @@ void nwy_appimg_fota(){
             VnET_echo("\r\n del %s", file_bin_update);
             nwy_sleep(500);
         }
-        if(nwy_sdk_fexist("VNET_001D.bin")){
-            ret = nwy_sdk_file_unlink("VNET_001D.bin");
-            VnET_echo("\r\n del %s", "VNET_001D.bin");
-            nwy_sleep(500);
-        }
+        // if(nwy_sdk_fexist("VNET_001D.bin")){
+        //     ret = nwy_sdk_file_unlink("VNET_001D.bin");
+        //     VnET_echo("\r\n del %s", "VNET_001D.bin");
+        //     nwy_sleep(500);
+        // }
         fd = nwy_sdk_fopen(file_bin_update, NWY_CREAT | NWY_RDWR | NWY_TRUNC);
 
         if (fota_store_firm[0]==0){
@@ -4529,7 +4528,7 @@ int Center_Handle_Command(unsigned char *cmd, int len, int src ){
         }
     }
     else{
-        Response_Command(ptr1,src,"SYNTAX ERROR");
+        Response_Command(ptr0,src,"SYNTAX ERROR");
     }
 }
 
